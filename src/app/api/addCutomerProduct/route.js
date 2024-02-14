@@ -8,7 +8,7 @@ export const POST = async (request) => {
   try {
     const { customer_id, products,order_id } = await request.json();
     var datass = { customer_id, products,order_id } 
-    console.log(datass);
+    console.log(datass,"datass");
     const customerId = datass.customer_id;
     console.log(customerId);
     const existingCustomer = await customerOrder.findById(customerId);
