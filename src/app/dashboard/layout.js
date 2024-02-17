@@ -20,6 +20,7 @@ export default function DashboardLayout({children}){
           <li><Link href="/dashboard/addProducts"> Products Report</Link></li>
           <li><Link href="/dashboard/addCompany">Company report</Link></li>
           <li><Link href="/dashboard/addCategory">Category report</Link></li>
+    
 
 
 
@@ -31,7 +32,7 @@ export default function DashboardLayout({children}){
       <header className="topbar">
         <div className="topbar-left">
           <div className="logo">
-            <strong>DARUL MAKMUR</strong>
+            <strong>IPMEGA</strong>
           </div>
         </div>
         <div className="topbar-right">
@@ -39,7 +40,7 @@ export default function DashboardLayout({children}){
         </div>
       </header>
       <div className="content">
-        <div className='card' style={{ minHeight: '80vh' }}>
+        <div className='card mt-5' style={{ minHeight: '80vh' }}>
           <div className='card-body'>
             {/* Your main content goes here */}
             {children}

@@ -8,7 +8,12 @@
     color: #ecf0f1;
     padding: 20px;
     max-width: 1200px;
+    height: 100vh;
+   /* Existing styles */
+   position: fixed;
+   top: 0;
   }
+ 
   
   .profile-section {
     display: flex;
@@ -23,6 +28,10 @@
   }
   
  /* Navigation Menu */
+ .nav-menu{
+  height: 100vh;
+  overflow-y: auto;
+ }
 .nav-menu ul {
     list-style-type: none;
     padding: 0;
@@ -67,6 +76,7 @@
     flex: 1;
     background-color: #ecf0f1;
     overflow: auto;
+    margin-left: 20%;
   }
   
   .topbar {
@@ -76,9 +86,11 @@
     padding: 10px 20px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 100;
+    left: 250px; /* Adjust left position to match sidebar width */
+    width: calc(100% - 250px); /* Adjust width to fill remaining space */
+    z-index: 1000; /* Ensure topbar is above sidebar */
   }
   .sidebar.collapsed {
     width: 0px; /* Adjust the width when collapsed */

@@ -19,7 +19,7 @@ export const POST = async (request) => {
   }
 };
 
-export const GET = async (request) => {
+export const GET = async (request) => { 
   try {
        await connect();
        const posts = await companyReport.find() 
@@ -30,4 +30,20 @@ export const GET = async (request) => {
 return new NextResponse('error in fetcing data',error,{status:500})
 
   }
-}
+};
+
+export const DELETE = async (request) => {
+  try {
+    await connect();
+    const urlParams = new URLSearchParams(request.url.split('?')[1]);
+    const id = urlParams.get('id');
+    console.log(id);
+    const deletedCategory = await companyReport.findByIdAndDelete(id);
+    if (!deletedCategory) {
+      return new NextResponse('Company not found', { status: 404 });
+    }
+    return new NextResponse(JSON.stringify({ message: 'Company deleted successfully' }), { status: 200 });
+  } catch (error) {
+    return new NextResponse('Error deleting company', error, { status: 500 });
+  }
+};
