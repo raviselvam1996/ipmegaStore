@@ -11,13 +11,16 @@ const Addcompany = () => {
 
     useEffect(() => {
 
-      axios.get('http://localhost:3000/api/addCompany')
-      .then((res) => {
-        console.log(res.data.data);
-        setcompanyList(res.data.data)
-      })
+      getCompanyList();
 
     },[])
+    const getCompanyList = async () => {
+
+      await axios.get("http://localhost:3000/api/addCompany").then((res) => {
+        console.log(res.data.data);
+        setcompanyList(res.data.data)
+      });
+    }
   
     const companyNameInput = (e) => {
       setcompanyName(e.target.value)
@@ -37,12 +40,28 @@ const Addcompany = () => {
         console.log(formData);
         const response = await axios.post('http://localhost:3000/api/addCompany', formData);
         console.log('Response:', response.data);
+        getCompanyList();
+
       } catch (error) {
         console.error('Error:', error);
       }
     };
+    const deleteCompany = async (id) => {
+      try {
+        console.log(id);
+        const response = await axios.delete(`http://localhost:3000/api/addCompany?id=${id}`);
+        console.log(response.data); // Assuming the API returns a message
+        getCompanyList();
+        // Handle success, if needed
+      } catch (error) {
+        console.error('Error deleting category:', error.response.data);
+        // Handle error, if needed
+      }
+  console.log(id);
+     }
+  
   return (<> 
-     <form className='row'>
+     <form className='row'> 
          <div className="form-group col-md-6 mt-3">
                        <label for="select-image">company Name</label>
                        <input type="text" className="form-control" placeholder="Enter Name" onChange={companyNameInput}/>
@@ -68,6 +87,8 @@ const Addcompany = () => {
     <tr>
       <th>Category Name</th>
       <th>Category Description</th>
+      <th>Action</th>
+
     
 
     </tr>
@@ -78,7 +99,8 @@ const Addcompany = () => {
         <tr key={index}>
           <td>{product.company_name}</td>
           <td>{product.company_desc}</td>
-       
+          <td><button className="btn btn-danger" onClick={() => deleteCompany(product._id)}>Delete</button></td>
+
 
         </tr>
       ))

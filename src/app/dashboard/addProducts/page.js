@@ -39,6 +39,8 @@ var formData = productsInputs;
   axios.post("http://localhost:3000/api/addProducts",formData)
   .then((res) => {
 console.log(res);
+getproductList();
+
   })
   .catch((error) => {
     console.error('Error fetching data:', error); 
@@ -48,17 +50,7 @@ console.log(res);
 
   useEffect(() =>{
 
-axios.get("http://localhost:3000/api/addProducts")
-.then((res) => {
-  console.log(res.data.data);
-  setproductList(res.data.data);
- 
-
-})
-.catch((error) => {
-  console.error('Error fetching data:', error);
-
-})
+    getproductList();
 
 axios.get("http://localhost:3000/api/addCategory")
 .then((res) => {
@@ -75,7 +67,28 @@ axios.get("http://localhost:3000/api/addCompany")
 .then((res) => {
 setCompanyList(res.data.data)
 })
+
   },[])
+  const getproductList = async () => {
+
+    await axios.get("http://localhost:3000/api/addProducts").then((res) => {
+      console.log(res.data.data);
+      setproductList(res.data.data)
+    });
+  }
+  const deleteProduct = async (id) => {
+    try {
+      console.log(id);
+      const response = await axios.delete(`http://localhost:3000/api/addProducts?id=${id}`);
+      console.log(response.data); // Assuming the API returns a message
+      getproductList();
+      // Handle success, if needed
+    } catch (error) {
+      console.error('Error deleting category:', error.response.data);
+      // Handle error, if needed
+    }
+console.log(id);
+   }
   return (<>
        <form className='row'>
          <div className="form-group col-md-6 mt-3">
@@ -149,6 +162,7 @@ setCompanyList(res.data.data)
 <table className="table table-bordered table-striped mt-5">
   <thead className="table-dark">
     <tr>
+      <th>Action</th>
       <th>Product Name</th>
       <th>Product Price</th>
       <th>Total Stock</th>
@@ -165,6 +179,7 @@ setCompanyList(res.data.data)
     {productList.length > 0 ? (
       productList.map((product,index) => (
         <tr key={index}>
+          <td><button className="btn btn-danger" onClick={() => deleteProduct(product._id)}>Delete</button></td>
           <td>{product.product_name}</td>
           <td>{product.product_price}</td>
           <td>{product.total_stock}</td>
